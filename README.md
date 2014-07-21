@@ -42,7 +42,7 @@ Be consistent.
   end
   ```
 
-* Limit lines to 80 characters.
+* Limit lines to 80 characters (or as close to 80 lines as possible without breaking formatting guidelines).
 
 * Avoid trailing whitespace.
 
@@ -233,7 +233,7 @@ Be consistent.
     calc_something_else
   end
 
-  # bad - whitespace isn't free when you only have 80 characters.
+  # good - if character limit allows for it
   kind = case year
          when 1850..1889 then 'Blues'
          when 1890..1909 then 'Ragtime'
@@ -315,12 +315,12 @@ Be consistent.
 * Use spaces around the `=` operator when assigning default values to method parameters:
 
   ```Ruby
-  # bad
+  # good
   def some_method(arg1=:default, arg2=nil, arg3=[])
     # do something...
   end
 
-  # good
+  # less than ideal (but by no means bad)
   def some_method(arg1 = :default, arg2 = nil, arg3 = [])
     # do something...
   end
@@ -426,6 +426,7 @@ Be consistent.
   # good - much easier to parse for the human brain
   num = 1_000_000
   ```
+ 
 * Don't use block comments. They cannot be preceded by whitespace and are not
   as easy to spot as regular comments.
 
@@ -627,7 +628,7 @@ Be consistent.
   x = !something
   ```
 
-* Avoid the use of `!!`. Exceptions are for referencing large objects that would stick around longer than necessary.
+* Avoid the use of `!!` in conditional statements. Exceptions are: 1. referencing large objects that would stick around longer than necessary; 2. objects that may not be a boolean but needed to be treated as such.
 
   ```Ruby
   # bad
@@ -648,29 +649,7 @@ Be consistent.
   end
   ```
 
-* The `and` and `or` keywords are banned. It's just not worth
-  it. Always use `&&` and `||` instead. Use parentheses rather than depend on
-  binding differences.
-
-  ```Ruby
-  # bad
-  # boolean expression
-  if some_condition and some_other_condition
-    do_something
-  end
-
-  # control flow
-  document.saved? or document.save!
-
-  # good
-  # boolean expression
-  if some_condition && some_other_condition
-    do_something
-  end
-
-  # control flow
-  document.saved? || document.save!
-  ```
+* Prefer to use `&&` and `||` over `and` and `or`. The only place `and` and `or` are useful is returning a boolean value and not an object.
 
 * Avoid multi-line `?:` (the ternary operator); use `if/unless` instead.
 
@@ -690,7 +669,7 @@ Be consistent.
   some_condition && do_something
   ```
 
-* Avoid modifier `if/unless` usage at the end of a
+* Try to avoid modifier `if/unless` usage at the end of a
   non-trivial multi-line block.
 
   ```Ruby
@@ -706,6 +685,8 @@ Be consistent.
     end
   end
   ```
+
+* Prefer using `if` over `unless` when possible. [reference](http://www.railstips.org/blog/archives/2008/12/01/unless-the-abused-ruby-conditional/)
 
 * Favor `unless` over `if` for negative conditions (or control
   flow `||`).
@@ -875,7 +856,7 @@ Be consistent.
   bowling.score.should == 0
   ```
 
-* Omit the outer braces around an implicit options hash.
+* Omit the outer braces around an implicit options hash (when defintion only accepts one hash)
 
   ```Ruby
   # bad
@@ -964,7 +945,7 @@ impact, though, as the block gets converted to a Proc.
   end
   ```
 
-* Avoid `return` where not required for flow of control.
+* Avoid `return` where not required for flow of control. 
 
   ```Ruby
   # bad
