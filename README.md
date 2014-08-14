@@ -2177,7 +2177,9 @@ impact, though, as the block gets converted to a Proc.
 
 * Avoid needless metaprogramming.
 
-* Try to avoid string evaluation as much as possible.
+* Do not use string evaluation for metaprogramming! Use methods like
+  `class_exec`, `define_method`, etc. to dynamically create dynamically named
+  methods, anonymous modules, etc.
 
 ## Misc
 
