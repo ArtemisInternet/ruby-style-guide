@@ -84,10 +84,10 @@ Be consistent.
   end
 
   # okish
-  class FooError < StandardError; end
+  FooError = Class.new(StandardError)
 
   # good
-  FooError = Class.new(StandardError)
+  class FooError < StandardError; end
   ```
 
 * Avoid single-line methods. Although they are somewhat popular in the
@@ -748,7 +748,7 @@ Be consistent.
   end
 
   # less good, but reasonable if there is no reasonable means to determine
-  the positive case.
+  # the positive case.
   # Prefer unless condition over ! condition
   unless failure?
     puts 'success'
@@ -1599,7 +1599,7 @@ impact, though, as the block gets converted to a Proc.
     SOME_CONSTANT = 20
 
     # inner public class
-    CustomErrorKlass = Class.new(StandardError)
+    class CustomErrorKlass < StandardError; end
 
     # afterwards we have attribute macros
     attr_reader :name
